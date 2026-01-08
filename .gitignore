@@ -1,0 +1,14 @@
+# Node
+node_modules/
+npm-debug.log*
+.env
+
+# Prisma
+backend/prisma/migrations/
+
+# Vue
+frontend/dist/
+
+# OS
+.DS_Store
+

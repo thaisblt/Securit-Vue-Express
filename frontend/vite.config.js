@@ -1,0 +1,39 @@
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+// https://vite.dev/config/
+export default defineConfig({
+   plugins: [vue()],
+   server: {
+      port: 8080,
+      open: true,
+      host: true, // allows for external device connection on local network
+      proxy: {
+         // prevent CORS error in dev when backend and frontend servers run on different ports
+         '/check_login': {
+            target: 'http://localhost:3000',
+            changeOrigin: true,
+         },
+         '/check_login_code': {
+            target: 'http://localhost:3000',
+            changeOrigin: true,
+         },
+         '/check_register': {
+            target: 'http://localhost:3000',
+            changeOrigin: true,
+         },
+         '/check_register_code': {
+            target: 'http://localhost:3000',
+            changeOrigin: true,
+         },
+         '/check_name_password': {
+            target: 'http://localhost:3000',
+            changeOrigin: true,
+         },        
+         '^/api/.*': {
+            target: 'http://localhost:3000',
+            changeOrigin: true,
+         },
+      }
+   }
+})

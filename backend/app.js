@@ -6,6 +6,7 @@ import {sendMail} from './mail.mjs'
 import { getRandomCode } from './utilities.mjs';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
+import "dotenv/config" //charge automatiquement le .env dans process
 
 const app = express();
 const email2code = {};
@@ -26,14 +27,14 @@ app.post('/api/check_login', async(req, res) => {
         if (await bcrypt.compare(password, user.password)) { 
             const code = getRandomCode().toString();
             email2code[email] = code;
-            //await sendMail({
-            //to: email,
-            //subject:'code de vérification',
-            //html:`Code à entrer : ${code}`,
-            //});
+            await sendMail({
+            to: email,
+            subject:'code de vérification',
+            html:`Code à entrer : ${code}`,
+            });
             console.log({email2code});
             res.cookie('codeWait','code60s', {maxAge:60000});
-        res.sendStatus(200)
+            res.sendStatus(200)
             
         } else {
         res.sendStatus(403)
@@ -45,7 +46,7 @@ app.post('/api/check_login', async(req, res) => {
 // Se connecter : Verifier le code
 app.post('/api/check_login_code', async (req, res) => {
     const { email, code } = req.body;
-    //let attempts = req.body.attempts;
+    //let attempts = req.body.attempts; nombres de tentatives
     const user = await prisma.User.findUnique({
         where: {email}
     }); 

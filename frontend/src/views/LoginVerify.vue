@@ -32,7 +32,7 @@
 
 <template>
     <div>
-        authEmail{{ authEmail }}
+        {{ authEmail }}
     </div>
     <div class="login-form">
 

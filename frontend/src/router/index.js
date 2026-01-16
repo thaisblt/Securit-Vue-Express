@@ -6,6 +6,7 @@ import Register from '../views/Register.vue'
 import RegisterVerify from '../views/RegisterVerify.vue'
 import SetNamePassword from '../views/SetNamePassword.vue'
 import VisitList from '../views/VisitList.vue'
+import VisitDetail from '../views/VisitDetail.vue'
 
 
 const routes = [
@@ -32,6 +33,10 @@ const routes = [
    {
       path: '/visit_list',
       component: VisitList,
+   },
+   {
+      path: '/visit_detail/:id',
+      component: VisitDetail,
    },
 ]
 

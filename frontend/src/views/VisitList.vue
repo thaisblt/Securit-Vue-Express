@@ -5,7 +5,7 @@ import { visits } from '../state.mjs'
 
 // Récupérer la liste des visites 
 onMounted(async () => {
-    const res = await fetch('/api/visit', {
+    const res = await fetch('/api/visits', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const filteredVisits = computed( () => {
             <input
                 type="search"
                 v-model="searchInput"
-                placeholder="A tester quand BD remplie"
+                placeholder="Recherche"
             />
         </div>
 
@@ -45,7 +45,7 @@ const filteredVisits = computed( () => {
     <main class="page-content">
         <div class="page-header">
             <h2>Visites</h2>
-            <a href="/new_visit" class="btn-add">＋ Nouvelle visite</a>
+            <router-link :to="'/new_visit'" class="btn-add">＋ Nouvelle visite</router-link>
         </div>
 
         <table class="table">
@@ -69,7 +69,7 @@ const filteredVisits = computed( () => {
                             <td>{{ new Date(visit.date).toLocaleDateString() }}></td>
                             <td>{{ visit.company.name }}</td>
                             <td>{{ visit.inspector.name }}</td>
-                            <td><a href="/visit_detail/<%= visit.id %>" class="bouton">Afficher</a></td>
+                            <td><router-link :to="`/visit_detail/${visit.id}`" class="bouton">Afficher</router-link></td>
                     </tr>
                 </template>
             </tbody>

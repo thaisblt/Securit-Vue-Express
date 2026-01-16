@@ -153,6 +153,23 @@ app.get('/api/visits', async (req, res) => {
     res.json({ visits })
 })
 
+// Récupérer les détails d'une visite via son id en query param
+app.get('/api/visits/:id', async (req, res) => {
+    const visitId = parseInt(req.params.id)
+    const visit = await prisma.Visit.findUnique({
+        where : { id: visitId },
+        include: {
+            company: true,
+            inspector: true
+        }
+    })
+
+    if (!visit) {
+        return res.sendStatus(404)
+    }
+    res.json(visit)
+})
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
